@@ -62,9 +62,8 @@ export default function Signup() {
       const user = data?.user
       const session = data?.session
 
-      if (!user && !session) {
-        setMessage('Signup successful. Please check your email to confirm your account.')
-        return
+      if (!user) {
+        throw new Error('Failed to create user account.')
       }
 
       const userId = user?.id || session?.user?.id
@@ -87,6 +86,7 @@ export default function Signup() {
         throw profileError
       }
 
+      setMessage('Account created successfully!')
       navigate(redirectTo)
     } catch (err) {
       setError(err?.message || 'Unable to create account. Please try again.')
